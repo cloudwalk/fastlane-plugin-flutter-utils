@@ -19,17 +19,17 @@ describe Fastlane::FlutterUtils do
     end
 
     it 'increment patch' do
-      new_version = Fastlane::Actions::IncrementSemanticVersion.run(sem_ver: '1.1.1', increment_type: 'patch')
+      new_version = Fastlane::Actions::IncrementSemanticVersionAction.run(sem_ver: '1.1.1', increment_type: 'patch')
       expect(new_version).to eq('1.1.2')
     end
 
     it 'increment minor' do
-      new_version = Fastlane::Actions::IncrementSemanticVersion.run(sem_ver: '1.1.1', increment_type: 'minor')
+      new_version = Fastlane::Actions::IncrementSemanticVersionAction.run(sem_ver: '1.1.1', increment_type: 'minor')
       expect(new_version).to eq('1.2.1')
     end
 
     it 'increment major' do
-      new_version = Fastlane::Actions::IncrementSemanticVersion.run(sem_ver: '1.1.1', increment_type: 'major')
+      new_version = Fastlane::Actions::IncrementSemanticVersionAction.run(sem_ver: '1.1.1', increment_type: 'major')
       expect(new_version).to eq('2.1.1')
     end
   end

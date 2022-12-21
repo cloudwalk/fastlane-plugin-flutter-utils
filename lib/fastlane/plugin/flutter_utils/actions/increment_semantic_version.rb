@@ -4,7 +4,7 @@ require_relative '../helper/flutter_utils_helper'
 
 module Fastlane
   module Actions
-    class IncrementSemanticVersion < Action
+    class IncrementSemanticVersionAction < Action
       def self.run(params)
         helper = Helper::FlutterUtilsHelper.new
         helper.increment_sem_ver(sem_ver: params[:sem_ver], increment_type: params[:increment_type])
