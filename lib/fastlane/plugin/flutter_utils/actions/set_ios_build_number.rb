@@ -5,9 +5,9 @@ module Fastlane
   module Actions
     class SetIosBuildNumberAction < Action
       def self.run(params)
-        UI.message("The flutter_versioning plugin is working!")
         helper = Helper::FlutterUtilsHelper.new
-        helper.set_build_number(params[:build], params[:target_name])
+        helper.set_build_number(params[:build], params[:target_name], xcodeproj_path: params[:xcodeproj])
+        UI.message("Successfully updated build number!")
       end
 
       def self.description
@@ -34,7 +34,7 @@ module Fastlane
             description: "The target name",
             optional: true,
             type: String,
-            default_value: 'Runner'
+            default_value: 'Runner',
           ),
           FastlaneCore::ConfigItem.new(
             key: :build,
@@ -42,6 +42,14 @@ module Fastlane
             description: "The build number of iOS app",
             optional: false,
             type: String
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :xcodeproj,
+            env_name: "XCODEPROJ_PATH",
+            description: "The path to xcodeproj",
+            optional: true,
+            type: String,
+            default_value: 'Runner.xcodeproj'
           )
         ]
       end

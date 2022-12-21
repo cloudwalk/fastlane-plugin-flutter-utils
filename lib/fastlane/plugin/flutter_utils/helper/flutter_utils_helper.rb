@@ -13,10 +13,11 @@ module Fastlane
       end
 
 
-      def set_version_number(version_number, target)
-        UI.message("Settings version number #{version_number} in #{target} target")
+      def set_version_number(version_number, target, xcodeproj_path: nil)
+        UI.message("Settings version number #{version_number.to_s} in #{target} target")
 
-        xc_project_path = find_xcode_project_path
+        xc_project_path = xcodeproj_path || find_xcode_project_path
+        xc_project_path = "#{Dir.getwd}/#{xc_project_path}" if xcodeproj_path
         project = find_xcode_project(xc_project_path)
 
         xc_target = find_xcode_target_by_name(project, target)
@@ -26,11 +27,12 @@ module Fastlane
         project.save
       end
 
-      def set_build_number(build_number, target)
-        UI.message("Settings build number #{build_number} in #{target} target")
+      def set_build_number(build_number, target, xcodeproj_path: nil)
+        UI.message("Settings build number #{build_number.to_s} in #{target} target")
 
-        xc_project_path = find_xcode_project_path
-        project = find_xcode_project(xc_project_path)
+        xc_project_path = xcodeproj_path || find_xcode_project_path
+        full_path = "#{Dir.getwd}/#{xc_project_path}"
+        project = find_xcode_project(full_path)
 
         xc_target = find_xcode_target_by_name(project, target)
         xc_target.build_configurations.each { |build_configuration| 
