@@ -62,7 +62,23 @@ module Fastlane
         "#{major}.#{minor}.#{patch}"
       end
 
+      def get_flutter_version_number(pubspec_path:)
+        version = get_flutter_version(pubspec_path)
+        version.split('+')[0]
+      end
+
+      def get_flutter_build_number(pubspec_path:)
+        version = get_flutter_version(pubspec_path)
+        UI.message("Current version #{version}")
+        version.split('+')[1]
+      end
+
       private
+
+      def get_flutter_version(path)
+        pubspec = YAML.load_file(path)
+        pubspec['version']
+      end
 
       def find_xcode_project_path
         absolute_dir_path = Dir.getwd
