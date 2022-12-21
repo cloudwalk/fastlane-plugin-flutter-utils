@@ -42,5 +42,17 @@ describe Fastlane::FlutterUtils do
       version_number = Fastlane::Actions::GetFlutterVersionNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
       expect(version_number).to eq("1.12.1")
     end
+
+    it 'increment build number from pubspec' do
+      Fastlane::Actions::IncrementFlutterBuildNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      build_number_from_yml = Fastlane::Actions::GetFlutterBuildNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      expect(build_number_from_yml).to eq("312")
+    end
+    
+    it 'increment version number from pubspec' do
+      Fastlane::Actions::IncrementFlutterVersionNumberAction.run(increment_type:'minor', pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      version_number_from_yml = Fastlane::Actions::GetFlutterVersionNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      expect(version_number_from_yml).to eq("1.13.1")
+    end
   end
 end
