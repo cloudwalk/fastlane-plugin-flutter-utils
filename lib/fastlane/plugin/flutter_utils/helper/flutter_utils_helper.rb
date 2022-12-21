@@ -1,5 +1,7 @@
 require 'fastlane_core/ui/ui'
 require "xcodeproj"
+require 'yaml'
+require 'yaml/store'
 
 module Fastlane
   UI = FastlaneCore::UI unless Fastlane.const_defined?(:UI)
@@ -64,19 +66,58 @@ module Fastlane
 
       def get_flutter_version_number(pubspec_path:)
         version = get_flutter_version(pubspec_path)
+        UI.message("Current version #{version}")
         version.split('+')[0]
       end
 
       def get_flutter_build_number(pubspec_path:)
         version = get_flutter_version(pubspec_path)
-        UI.message("Current version #{version}")
+        UI.message("Current build number #{version}")
         version.split('+')[1]
+      end
+
+      def increment_flutter_build_number(value:, pubspec_path:)
+        current_build_number = get_flutter_build_number(pubspec_path: pubspec_path)
+        value = 1 if value.nil?
+        UI.message("Current build number #{current_build_number}")
+        incremented_build_number = current_build_number.to_i + value.to_i
+        current_version_number = get_flutter_version_number(pubspec_path: pubspec_path)
+
+        UI.message("Incremented build number #{incremented_build_number}")
+
+        version = "#{current_version_number}+#{incremented_build_number}"
+        update_flutter_version(version: version, pubspec_path: pubspec_path)
+      end
+
+      def increment_flutter_version_number(increment_type:, pubspec_path:)
+        current_version_number = get_flutter_version_number(pubspec_path: pubspec_path)
+        current_build_number = get_flutter_build_number(pubspec_path: pubspec_path)
+        incremented_version_number = increment_sem_ver(sem_ver: current_version_number, increment_type: increment_type)
+
+        UI.message("Current version number #{current_version_number}")
+        UI.message("Incremented version number #{incremented_version_number}")
+
+        version = "#{incremented_version_number}+#{current_build_number}"
+        update_flutter_version(version: version, pubspec_path: pubspec_path)
       end
 
       private
 
+      def update_flutter_version(version:, pubspec_path:)
+        pubspec = YAML.safe_load(File.read(pubspec_path))
+        pubspec['version'] = version
+
+        file = File.read(pubspec_path)
+        current_version = get_flutter_version(pubspec_path)
+        new_contents = file.gsub(current_version, version)
+        puts new_contents
+    
+        File.open(pubspec_path, "w") {|file| file.puts new_contents }
+      end
+
       def get_flutter_version(path)
-        pubspec = YAML.load_file(path)
+        pubspec = YAML.safe_load(File.read(path))
+        UI.message("Get flutter version #{pubspec['version']}")
         pubspec['version']
       end
 
