@@ -41,6 +41,27 @@ module Fastlane
         project.save
       end
 
+      def increment_sem_ver(sem_ver:, increment_type:)
+        unless /\d+\.\d+\.\d+/ =~ sem_ver
+          raise "Your semantic version must match the format 'X.X.X'."
+        end
+        unless ["patch", "minor", "major"].include?(increment_type)
+          raise "Only 'patch', 'minor', and 'major' are supported increment types."
+        end
+
+        major, minor, patch = sem_ver.split(".")
+        case increment_type
+        when "patch"
+          patch = patch.to_i + 1
+        when "minor"
+          minor = minor.to_i + 1
+        when "major"
+          major = major.to_i + 1
+        end
+
+        "#{major}.#{minor}.#{patch}"
+      end
+
       private
 
       def find_xcode_project_path
