@@ -13,5 +13,9 @@ describe Fastlane::FlutterUtils do
 
       Fastlane::Actions::SetIosVersionNumberAction.run(target_name: 'example', version: '1.1.1', xcodeproj: 'spec/fixtures/example.xcodeproj')
     end
+
+    it 'prints a error when xcodeproj is not found' do
+      expect { Fastlane::Actions::SetIosVersionNumberAction.run(target_name: 'any', version: 'any') }.to raise_error
+    end
   end
 end
