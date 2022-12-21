@@ -32,5 +32,15 @@ describe Fastlane::FlutterUtils do
       new_version = Fastlane::Actions::IncrementSemanticVersionAction.run(sem_ver: '1.1.1', increment_type: 'major')
       expect(new_version).to eq('2.1.1')
     end
+
+    it 'get build number from pubspec' do
+      buid_number = Fastlane::Actions::GetFlutterBuildNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      expect(buid_number).to eq("311")
+    end
+
+    it 'get version number from pubspec' do
+      version_number = Fastlane::Actions::GetFlutterVersionNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      expect(version_number).to eq("1.12.1")
+    end
   end
 end
