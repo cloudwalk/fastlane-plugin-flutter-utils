@@ -1,4 +1,5 @@
 require 'fastlane/action'
+require 'fastlane_core'
 require_relative '../helper/flutter_utils_helper'
 
 module Fastlane
