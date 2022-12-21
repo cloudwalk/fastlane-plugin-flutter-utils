@@ -34,7 +34,7 @@ module Fastlane
             description: "The target name",
             optional: true,
             type: String,
-            default_value: 'Runner',
+            default_value: 'Runner'
           ),
           FastlaneCore::ConfigItem.new(
             key: :build,
