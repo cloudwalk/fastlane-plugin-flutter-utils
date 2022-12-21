@@ -107,12 +107,12 @@ module Fastlane
         pubspec = YAML.safe_load(File.read(pubspec_path))
         pubspec['version'] = version
 
-        file = File.read(pubspec_path)
+        data = File.read(pubspec_path)
         current_version = get_flutter_version(pubspec_path)
-        new_contents = file.gsub(current_version, version)
-        puts new_contents
-    
-        File.open(pubspec_path, "w") {|file| file.puts new_contents }
+        new_contents = data.gsub(current_version, version)
+        puts(new_contents)
+
+        File.open(pubspec_path, "w") { |file| file.puts(new_contents) }
       end
 
       def get_flutter_version(path)
