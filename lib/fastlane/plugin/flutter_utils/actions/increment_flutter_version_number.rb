@@ -37,7 +37,7 @@ module Fastlane
             default_value: Dir.getwd
           ),
           FastlaneCore::ConfigItem.new(
-            key: :build,
+            key: :increment_type,
             env_name: "INCREMENT_TYPE",
             description: "Increment version number",
             optional: true,
