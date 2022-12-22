@@ -76,6 +76,18 @@ module Fastlane
         version.split('+')[1]
       end
 
+      def set_flutter_version_number(version:, pubspec_path:)
+        current_build_number = get_flutter_build_number(pubspec_path: pubspec_path)
+        version = "#{version}+#{current_build_number}"
+        update_flutter_version(version: version, pubspec_path: pubspec_path)
+      end
+
+      def set_flutter_build_number(build:, pubspec_path:)
+        current_version_number = get_flutter_version_number(pubspec_path: pubspec_path)
+        version = "#{current_version_number}+#{build}"
+        update_flutter_version(version: version, pubspec_path: pubspec_path)
+      end
+
       def increment_flutter_build_number(value:, pubspec_path:)
         current_build_number = get_flutter_build_number(pubspec_path: pubspec_path)
         value = 1 if value.nil?
