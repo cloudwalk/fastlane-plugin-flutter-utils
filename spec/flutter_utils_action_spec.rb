@@ -54,5 +54,17 @@ describe Fastlane::FlutterUtils do
       version_number_from_yml = Fastlane::Actions::GetFlutterVersionNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
       expect(version_number_from_yml).to eq("1.13.1")
     end
+
+    it 'set flutter build number' do
+      Fastlane::Actions::SetFlutterBuildNumberAction.run(build: '310', pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      build_number_from_yml = Fastlane::Actions::GetFlutterBuildNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      expect(build_number_from_yml).to eq("310")
+    end
+
+    it 'set flutter version number' do
+      Fastlane::Actions::SetFlutterVersionNumberAction.run(version: '1.25.1', pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      version_number_from_yml = Fastlane::Actions::GetFlutterVersionNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
+      expect(version_number_from_yml).to eq("1.25.1")
+    end
   end
 end
