@@ -57,8 +57,11 @@ module Fastlane
           patch = patch.to_i + 1
         when "minor"
           minor = minor.to_i + 1
+          patch = 0
         when "major"
           major = major.to_i + 1
+          minor = 0
+          patch = 0
         end
 
         "#{major}.#{minor}.#{patch}"
