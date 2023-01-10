@@ -25,12 +25,12 @@ describe Fastlane::FlutterUtils do
 
     it 'increment minor' do
       new_version = Fastlane::Actions::IncrementSemanticVersionAction.run(sem_ver: '1.1.1', increment_type: 'minor')
-      expect(new_version).to eq('1.2.1')
+      expect(new_version).to eq('1.2.0')
     end
 
     it 'increment major' do
       new_version = Fastlane::Actions::IncrementSemanticVersionAction.run(sem_ver: '1.1.1', increment_type: 'major')
-      expect(new_version).to eq('2.1.1')
+      expect(new_version).to eq('2.0.0')
     end
 
     it 'get build number from pubspec' do
@@ -52,7 +52,7 @@ describe Fastlane::FlutterUtils do
     it 'increment version number from pubspec' do
       Fastlane::Actions::IncrementFlutterVersionNumberAction.run(increment_type: 'minor', pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
       version_number_from_yml = Fastlane::Actions::GetFlutterVersionNumberAction.run(pubspec_path: "#{Dir.getwd}/spec/fixtures/pubspec.yaml")
-      expect(version_number_from_yml).to eq("1.13.1")
+      expect(version_number_from_yml).to eq("1.13.0")
     end
 
     it 'set flutter build number' do
